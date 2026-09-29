@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function Login() {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -41,7 +43,22 @@ function Login() {
         return;
       }
 
-      navigate("/");
+      const authData = await login(data.access_token);
+
+      if (!authData) {
+        setError("Unable to load your workspace.");
+        return;
+      }
+
+      const memberships = authData.memberships || [];
+
+      if (memberships.length === 0) {
+        navigate("/workspace-setup");
+      } else if (memberships.length === 1) {
+        navigate(`/workspaces/${memberships[0].organization_id}`);
+      } else {
+        navigate("/workspace-selector");
+      }
     } catch {
       setError("Unable to connect to the server. Please try again.");
     } finally {

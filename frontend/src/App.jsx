@@ -7,6 +7,10 @@ import VerifyEmail from "./pages/auth/VerifyEmail";
 import Login from "./pages/auth/Login";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+import WorkspaceSetup from "./pages/WorkspaceSetup";
+import CreateWorkspace from "./pages/CreateWorkspace";
 
 function App() {
   const [theme, setTheme] = useState(() => {
@@ -31,6 +35,16 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/workspace-setup" element={<WorkspaceSetup />} />
+          <Route path="/workspace/create" element={<CreateWorkspace />} />
+          <Route
+            path="/workspaces/:organizationId"
+            element={<div>Workspace loading...</div>}
+          />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
       </Route>
     </Routes>
   );

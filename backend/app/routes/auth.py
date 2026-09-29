@@ -11,6 +11,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from ..extensions import db
 from ..models import PendingUser, User, UserProfile, PasswordResetToken
 from ..utils.email import send_verification_email, send_password_reset_email
+from ..utils.jwt import create_access_token
+from ..utils.auth import jwt_required
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/v1/auth")
 
@@ -217,13 +219,46 @@ def login():
     if not check_password_hash(user.password_hash, password):
         return {"message": "Invalid email or password."}, 401
 
+    access_token = create_access_token(user.id)
+
     return {
         "message": "Login successful.",
+        "access_token": access_token,
         "user": {
             "id": user.id,
             "email": user.email
         }
-    }, 200    
+    }, 200   
+
+@auth_bp.route("/me", methods=["GET"])
+@jwt_required
+def get_current_user():
+    user = db.session.get(User, request.user_id)
+
+    if not user:
+        return {"message": "User not found."}, 404
+
+    if not user.is_active:
+        return {"message": "Your account is inactive."}, 403
+
+    memberships = [
+        {
+            "organization_id": membership.organization_id,
+            "organization_name": membership.organization.name,
+            "role": membership.role,
+            "member_identifier": membership.member_identifier
+        }
+        for membership in user.memberships
+        if membership.is_active and membership.organization.is_active
+    ]
+
+    return {
+        "user": {
+            "id": user.id,
+            "email": user.email
+        },
+        "memberships": memberships
+    }, 200
 
 @auth_bp.route("/forgot-password", methods=["POST"])
 def forgot_password():

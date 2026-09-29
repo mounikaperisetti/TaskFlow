@@ -1,49 +1,70 @@
+
+/* =========================================================
+   GLOBAL FONT AND ROOT SETTINGS
+   ========================================================= */
+
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
   font-family: "Inter", sans-serif;
-  color: #273044;
-  background: #f6f8fb;
+  color: #17211d;
+  background: #fcfcfa;
   font-synthesis: none;
 }
 
+/* =========================================================
+   LIGHT THEME - EMERALD + CHAMPAGNE
+   ========================================================= */
+
 :root[data-theme="light"] {
-  --page-bg:#e9edf3;
-  --surface: #f7f8fa;
-  --surface-soft: #e1e6ee;
-  --surface-tint:#e5e9f0;
-  --navbar-bg: #dce2eb;
-  --text: #273044;
-  --text-muted: #687386;
-  --text-soft: #8791a1;
-  --primary: #5964a8;
-  --primary-hover: #4d5898;
-  --primary-soft: #e6e8f4;
-  --border: #dce2ea;
-  --border-strong: #ccd4df;
-  --progress-bg: #e4e8ef;
-  --footer-bg: #202735;
-  --footer-text: #d6dbe4;
+  --page-bg: #fcfcfa;
+  --surface: #ffffff;
+  --surface-soft: #f5f7f5;
+  --surface-tint: #f8f5ed;
+  --navbar-bg: #ffffff;
+  --text: #17211d;
+  --text-muted: #66736d;
+  --text-soft: #8a9690;
+  --primary: #064e3b;
+  --primary-hover: #053f30;
+  --primary-soft: #e8f1ed;
+  --accent: #f8e7c9;
+  --accent-soft: #fcf5e8;
+  --border: #dde5e0;
+  --border-strong: #c8d4ce;
+  --progress-bg: #e1e9e5;
+  --footer-bg: #071a14;
+  --footer-text: #dce7e2;
 }
 
+/* =========================================================
+   DARK THEME - DEEP EMERALD + CHAMPAGNE
+   ========================================================= */
+
 :root[data-theme="dark"] {
-  --page-bg: #0f141d;
-  --surface: #171e29;
-  --surface-soft: #151c26;
-  --surface-tint: #1b2130;
-  --navbar-bg: #151b25;
-  --text: #e7eaf0;
-  --text-muted: #a0a8b7;
-  --text-soft: #7f899a;
-  --primary: #858bc7;
-  --primary-hover: #969bd1;
-  --primary-soft: #292d43;
-  --border: #293241;
-  --border-strong: #374153;
-  --progress-bg: #293241;
-  --footer-bg: #0b1017;
-  --footer-text: #c4cad4;
+  --page-bg: #071a14;
+  --surface: #0d241c;
+  --surface-soft: #102a21;
+  --surface-tint: #152f25;
+  --navbar-bg: #081d16;
+  --text: #f1f6f3;
+  --text-muted: #a9b8b0;
+  --text-soft: #81938a;
+  --primary: #2f7d64;
+  --primary-hover: #3d9075;
+  --primary-soft: #163d30;
+  --accent: #f8e7c9;
+  --accent-soft: #3a3020;
+  --border: #254238;
+  --border-strong: #36564a;
+  --progress-bg: #244137;
+  --footer-bg: #04100c;
+  --footer-text: #dce7e2;
 }
+
+/* =========================================================
+   GLOBAL ELEMENTS
+   ========================================================= */
 
 html {
   scroll-behavior: smooth;
@@ -65,18 +86,21 @@ a {
   overflow: hidden;
 }
 
-/* Navbar */
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
 .taskflow-navbar {
   background: var(--navbar-bg);
   border-bottom: 1px solid var(--border);
-  box-shadow: 0 3px 16px rgba(31, 41, 55, 0.04);
+  box-shadow: 0 3px 16px rgba(6, 78, 59, 0.05);
 }
 
 .taskflow-logo {
   color: var(--text) !important;
-  font-size: 1.35rem;
+  font-size: 1.55rem;
   font-weight: 700;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.045em;
   text-decoration: none;
 }
 
@@ -92,7 +116,7 @@ a {
 }
 
 .taskflow-navbar .nav-link:hover {
-  color: var(--text);
+  color: var(--primary);
 }
 
 .theme-toggle {
@@ -108,7 +132,7 @@ a {
 }
 
 .theme-toggle:hover {
-  color: var(--text);
+  color: var(--primary);
   border-color: var(--border-strong);
   transform: translateY(-1px);
 }
@@ -157,10 +181,164 @@ a {
 
 .taskflow-outline-btn:hover {
   background: var(--surface);
-  color: var(--text);
+  color: var(--primary);
   border-color: var(--primary);
 }
-/*Navbar */
+/* ========================================
+   NAVBAR BUTTONS
+======================================== */
+
+.taskflow-navbar .taskflow-signin,
+.taskflow-navbar .taskflow-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 6px 11px;
+  border-radius: 6px;
+  line-height: 1;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+/* Sign in button */
+.taskflow-navbar .taskflow-signin {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+}
+
+.taskflow-navbar .taskflow-signin:hover {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+/* Get started button */
+.taskflow-navbar .taskflow-primary-btn {
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.taskflow-navbar .taskflow-primary-btn:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+/* ================================
+   Logout Confirmation Modal
+   ================================ */
+
+.taskflow-logout-modal {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+.taskflow-logout-modal .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0;
+  padding: 24px 24px 8px;
+}
+
+.taskflow-logout-modal .modal-title {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.taskflow-logout-modal .btn-close {
+  width: 12px;
+  height: 12px;
+  padding: 8px;
+  opacity: 0.45;
+}
+
+.taskflow-logout-modal .btn-close:hover {
+  opacity: 0.8;
+}
+
+.taskflow-logout-modal .modal-body {
+  padding: 8px 24px 22px;
+}
+
+.taskflow-logout-modal .modal-body p {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.taskflow-logout-modal .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding: 14px 24px;
+}
+
+.taskflow-modal-cancel,
+.taskflow-modal-confirm {
+  border-radius: 7px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  transition: 0.2s ease;
+}
+
+.taskflow-modal-cancel {
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text);
+}
+
+.taskflow-modal-cancel:hover {
+  background: var(--surface-soft);
+  color: var(--text);
+}
+
+.taskflow-modal-confirm {
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.taskflow-modal-confirm:hover {
+  border-color: var(--primary-hover);
+  background: var(--primary-hover);
+  color: #ffffff;
+}
+
+.modal-backdrop {
+  background: #071a14;
+  opacity: 0.55 !important;
+}
+
+:root[data-theme="dark"] .taskflow-logout-modal {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+:root[data-theme="dark"] .taskflow-logout-modal .btn-close {
+  filter: invert(1);
+}
+/* =========================================================
+   NAVBAR - DARK MODE
+   ========================================================= */
+
 :root[data-theme="dark"] .navbar-toggler {
   border-color: var(--border-strong);
 }
@@ -169,13 +347,15 @@ a {
   filter: invert(1);
 }
 
+/* =========================================================
+   HERO SECTION
+   ========================================================= */
 
-/* Hero */
 .hero-section {
   position: relative;
   padding: 105px 0 115px;
   background:
-    radial-gradient(circle at 80% 20%, rgba(89, 100, 168, 0.09), transparent 32%),
+    radial-gradient(circle at 80% 20%, rgba(6, 78, 59, 0.08), transparent 32%),
     var(--page-bg);
 }
 
@@ -229,7 +409,10 @@ a {
   line-height: 1.75;
 }
 
-/* Product preview */
+/* =========================================================
+   HERO PRODUCT PREVIEW
+   ========================================================= */
+
 .hero-product {
   position: relative;
   max-width: 590px;
@@ -237,7 +420,7 @@ a {
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--surface);
-  box-shadow: 0 25px 70px rgba(31, 41, 55, 0.08);
+  box-shadow: 0 25px 70px rgba(6, 78, 59, 0.08);
   animation: productFloat 5s ease-in-out infinite;
 }
 
@@ -265,7 +448,7 @@ a {
 
 .product-window-body {
   display: flex;
-  min-height:455 px;
+  min-height: 455px;
 }
 
 .product-mini-nav {
@@ -441,7 +624,7 @@ a {
   border: 1px solid var(--border);
   border-radius: 7px;
   background: var(--surface);
-  box-shadow: 0 10px 25px rgba(31, 41, 55, 0.08);
+  box-shadow: 0 10px 25px rgba(6, 78, 59, 0.08);
   color: var(--text-muted);
   font-size: 0.59rem;
   animation: updateFloat 3.5s ease-in-out infinite;
@@ -454,7 +637,10 @@ a {
   background: var(--primary);
 }
 
-/* Product features */
+/* =========================================================
+   PRODUCT FEATURES SECTION
+   ========================================================= */
+
 .product-section {
   background: var(--surface-soft);
 }
@@ -474,7 +660,7 @@ a {
 .role-card:hover {
   transform: translateY(-4px);
   border-color: var(--border-strong);
-  box-shadow: 0 14px 35px rgba(31, 41, 55, 0.06);
+  box-shadow: 0 14px 35px rgba(6, 78, 59, 0.07);
 }
 
 .feature-number,
@@ -500,7 +686,10 @@ a {
   line-height: 1.7;
 }
 
-/* Workflow */
+/* =========================================================
+   WORKFLOW SECTION
+   ========================================================= */
+
 .workflow-section {
   background: var(--page-bg);
 }
@@ -556,17 +745,26 @@ a {
   font-size: 1rem;
 }
 
-/* Solutions */
+/* =========================================================
+   SOLUTIONS SECTION
+   ========================================================= */
+
 .solutions-section {
   background: var(--surface);
 }
 
-/* About */
+/* =========================================================
+   ABOUT SECTION
+   ========================================================= */
+
 .about-section {
   background: var(--surface-tint);
 }
 
-/* Contact */
+/* =========================================================
+   CONTACT SECTION
+   ========================================================= */
+
 .contact-section {
   background: var(--surface);
 }
@@ -607,7 +805,10 @@ a {
   color: var(--primary-hover);
 }
 
-/* Final CTA */
+/* =========================================================
+   FINAL CTA SECTION
+   ========================================================= */
+
 .cta-section {
   display: flex;
   align-items: center;
@@ -620,7 +821,10 @@ a {
   background: var(--surface-tint);
 }
 
-/* Footer */
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
 .taskflow-footer {
   background: var(--footer-bg);
   color: var(--footer-text);
@@ -631,12 +835,12 @@ a {
 }
 
 .taskflow-footer .taskflow-logo span {
-  color: var(--primary);
+  color: var(--accent);
 }
 
 .footer-description {
   max-width: 390px;
-  color: #9da6b5;
+  color: #a9b8b0;
   font-size: 0.8rem;
   line-height: 1.7;
 }
@@ -652,35 +856,37 @@ a {
 }
 
 .footer-links a {
-  color: #9da6b5;
+  color: #a9b8b0;
   font-size: 0.76rem;
   text-decoration: none;
 }
 
 .footer-links a:hover {
-  color: #ffffff;
+  color: var(--accent);
 }
 
 .taskflow-footer hr {
   margin: 32px 0 20px;
-  border-color: #394150;
+  border-color: #254238;
 }
 
 .footer-bottom {
   display: flex;
   justify-content: space-between;
   gap: 15px;
-  color: #7f8998;
+  color: #81938a;
   font-size: 0.68rem;
 }
 
-/* Subtle product animations */
+/* =========================================================
+   SUBTLE PRODUCT ANIMATIONS
+   ========================================================= */
+
 @keyframes productFloat {
   0%,
   100% {
     transform: translateY(0);
   }
-
   50% {
     transform: translateY(-6px);
   }
@@ -691,7 +897,6 @@ a {
   100% {
     transform: translateY(0);
   }
-
   50% {
     transform: translateY(-4px);
   }
@@ -703,7 +908,10 @@ a {
   }
 }
 
-/* Tablet */
+/* =========================================================
+   TABLET RESPONSIVE
+   ========================================================= */
+
 @media (max-width: 991px) {
   .hero-section {
     padding: 70px 0 80px;
@@ -729,7 +937,10 @@ a {
   }
 }
 
-/* Mobile */
+/* =========================================================
+   MOBILE RESPONSIVE
+   ========================================================= */
+
 @media (max-width: 575px) {
   .taskflow-navbar .container {
     padding-top: 7px !important;

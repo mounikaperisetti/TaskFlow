@@ -3,7 +3,16 @@ from .config import Config
 from .extensions import db, migrate, cors
 from .routes.health import health_bp
 from .routes.auth import auth_bp
-from .models import PendingUser, User, UserProfile, Organization, OrganizationMembership, OrganizationInvitation, PasswordResetToken
+from .models import (
+    PendingUser,
+    User,
+    UserProfile,
+    Organization,
+    OrganizationMembership,
+    OrganizationInvitation,
+    PasswordResetToken
+)
+from .routes.organizations import organizations_bp
 
 def create_app():
     app = Flask(__name__)
@@ -15,5 +24,6 @@ def create_app():
 
     app.register_blueprint(health_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(organizations_bp)
 
     return app
