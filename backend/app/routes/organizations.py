@@ -4,6 +4,7 @@ from sqlalchemy import select
 from ..extensions import db
 from ..models import Organization, OrganizationMembership
 from ..utils.auth import jwt_required
+from ..utils.organization import get_user_organization
 
 organizations_bp = Blueprint(
     "organizations",
@@ -19,6 +20,7 @@ ORGANIZATION_TYPES = {
 
 
 def create_slug(name):
+    """Create a unique URL-friendly organization slug."""
     base_slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
     slug = base_slug
     counter = 2
@@ -58,7 +60,6 @@ def create_organization():
             "message": "Invalid organization type."
         }, 400
 
-    
     organization = Organization(
         name=name,
         slug=create_slug(name),
@@ -90,3 +91,34 @@ def create_organization():
             "role": membership.role
         }
     }, 201
+
+
+@organizations_bp.route("/<string:slug>", methods=["GET"])
+@jwt_required
+def get_organization(slug):
+    """Return a workspace only when the current user belongs to it."""
+    organization, membership = get_user_organization(
+        slug,
+        request.user_id
+    )
+
+    if not organization:
+        return {
+            "message": "Workspace not found or you do not have access to it."
+        }, 404
+
+    return {
+        "organization": {
+            "id": organization.id,
+            "name": organization.name,
+            "slug": organization.slug,
+            "organization_type": organization.organization_type,
+            "member_identifier_label": organization.member_identifier_label
+        },
+        "membership": {
+            "id": membership.id,
+            "role": membership.role,
+            "member_identifier": membership.member_identifier,
+            "joined_at": membership.joined_at.isoformat()
+        }
+    }, 200

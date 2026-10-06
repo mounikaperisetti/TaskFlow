@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import AppLayout from "./layouts/AppLayout";
+import WorkspaceLayout from "./layouts/WorkspaceLayout";
 import Register from "./pages/auth/Register";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import Login from "./pages/auth/Login";
@@ -11,6 +12,8 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import WorkspaceSetup from "./pages/WorkspaceSetup";
 import CreateWorkspace from "./pages/CreateWorkspace";
+import WorkspaceSelector from "./pages/WorkspaceSelector";
+import WorkspaceDashboard from "./pages/WorkspaceDashboard";
 
 function App() {
   const [theme, setTheme] = useState(() => {
@@ -23,12 +26,22 @@ function App() {
   }, [theme]);
 
   function toggleTheme() {
-    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
+    setTheme((currentTheme) =>
+      currentTheme === "light" ? "dark" : "light"
+    );
   }
 
   return (
     <Routes>
-      <Route element={<AppLayout theme={theme} toggleTheme={toggleTheme} />}>
+      {/* Public and onboarding pages use the public layout. */}
+      <Route
+        element={
+          <AppLayout
+            theme={theme}
+            toggleTheme={toggleTheme}
+          />
+        }
+      >
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
@@ -39,11 +52,26 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/workspace-setup" element={<WorkspaceSetup />} />
           <Route path="/workspace/create" element={<CreateWorkspace />} />
+          <Route path="/workspace-selector" element={<WorkspaceSelector />} />
           <Route
-            path="/workspaces/:organizationId"
-            element={<div>Workspace loading...</div>}
+            path="/dashboard"
+            element={<Dashboard />}
           />
-          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+      </Route>
+
+      {/* Workspace has its own full-screen application layout. */}
+      <Route element={<ProtectedRoute />}>
+        <Route
+          path="/workspaces/:organizationSlug"
+          element={
+            <WorkspaceLayout
+              theme={theme}
+              toggleTheme={toggleTheme}
+            />
+          }
+        >
+          <Route index element={<WorkspaceDashboard />} />
         </Route>
       </Route>
     </Routes>

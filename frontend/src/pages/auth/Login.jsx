@@ -55,7 +55,7 @@ function Login() {
       if (memberships.length === 0) {
         navigate("/workspace-setup");
       } else if (memberships.length === 1) {
-        navigate(`/workspaces/${memberships[0].organization_id}`);
+        navigate(`/workspaces/${memberships[0].organization_slug}`);
       } else {
         navigate("/workspace-selector");
       }
@@ -146,3 +146,4 @@ function Login() {
 }
 
 export default Login;
+

@@ -4,13 +4,18 @@ import Footer from "../components/Footer";
 
 function AppLayout({ theme, toggleTheme }) {
   return (
-    <>
-      <NavbarTemp theme={theme} toggleTheme={toggleTheme} />
+    <div className="app-layout">
+      <NavbarTemp
+        theme={theme}
+        toggleTheme={toggleTheme}
+      />
+
       <main>
         <Outlet />
       </main>
+
       <Footer />
-    </>
+    </div>
   );
 }
 

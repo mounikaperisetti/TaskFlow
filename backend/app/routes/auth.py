@@ -245,6 +245,7 @@ def get_current_user():
         {
             "organization_id": membership.organization_id,
             "organization_name": membership.organization.name,
+            "organization_slug": membership.organization.slug,
             "role": membership.role,
             "member_identifier": membership.member_identifier
         }
